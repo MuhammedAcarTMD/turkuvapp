@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
                     5- Kütüphaneyi localde test edeceğimiz projenin settings.gradle dosyasında dependencyResolutionManagement altında repositories kısmına mavenLocal() kodunu ekliyoruz
                     6- Test edeceğimiz projenin app seviyesindeki build.gradle dosyasına implementation("org.turkuvaz:turkuvapp:1.0.1") ekleyip kütüphaneyi çağırabiliyoruz
 
-                Jitpack (yukarıdaki işlemlerden sadece 1, 2 ve 3. madde gerekli)
+                Jitpack (yukarıdaki işlemlerden sadece 2. madde gerekli)
                     1- Kütüphane modülünün oluşturulduğu projede jitpack.yml dosyasını oluşturuyoruz. Dosya içeriği aşağıdaki gibi olmalı
                         jdk:
                             - openjdk11
