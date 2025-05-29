@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("maven-publish")
+    //id("maven-publish")
 }
 
 android {
@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.androidx.foundation.android)
 }
 
+/*
 afterEvaluate {
     android.libraryVariants.forEach { variant ->
         publishing.publications.create(variant.name, MavenPublication::class.java){
@@ -66,4 +67,4 @@ afterEvaluate {
             version = "1.0.3"
         }
     }
-}
+}*/
