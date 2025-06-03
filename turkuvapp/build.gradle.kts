@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("maven-publish")
-    id("com.vanniktech.maven.publish") version "0.29.0"
 }
 
 android {
@@ -64,7 +63,16 @@ afterEvaluate {
             from(components.findByName(variant.name))
             groupId = "org.turkuvaz"
             artifactId = "turkuvapp"
-            version = "1.0.3"
+            version = "2.0.5"
+        }
+
+        publishing.repositories.maven {
+            name = "GithubPackages"
+            url = uri("https://maven.pkg.github.com/MuhammedAcarTMD/turkuvapp")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("GPR_USER")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("GPR_TOKEN")
+            }
         }
     }
 }
