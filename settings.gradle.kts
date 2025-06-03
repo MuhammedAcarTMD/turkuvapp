@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "TMDLibrary"
 include(":app")
 include(":turkuvapp")
+include(":testcom")
