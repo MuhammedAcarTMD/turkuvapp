@@ -65,6 +65,54 @@ class MainActivity : ComponentActivity() {
                     5- Sitenin sol kısmındaki Repositories altında modülü seçip get it butonuna basarak birkaç dakika analiz etmesini bekliyoruz. Analiz sonucunda log sütununa yeşil icon gelirse sorun yok/hazır anlamındadır
                     6- Test edeceğimiz projenin settings.gradle dosyasında dependencyResolutionManagement altında repositories kısmına 'maven { url = uri("https://jitpack.io") }' kodunu ekliyoruz
                     7- Yine test projesinde app seviyesindeki build.gradle dosyasına analiz sonucu jitpack sitesinin verdiği implementation'ı ekliyoruz ve artık kütüphaneyi çağırabiliyoruz
+
+
+
+                Maven Central
+                    1- https://central.sonatype.com sitesine github hesabı ile login olunur, bu bize direkt onaylanmış io.github.user_name namespace'ini verir
+                    2- Key işlemleri için kullanacağımız gpg uygulamasını bilgisayara https://gnupg.org/download/ adresinden indirip kurmamız gerekiyor
+                    3- Gpg kurulumu bittikten sonra "gpg --gen-key" komutunu terminalde çalıştırıyoruz
+                    4- Bu komut bizden full_name, email ve password(kaybedilmemeli) isteyecek ve sonunda bize fingerprint(sha gibi) verecek
+                    5- Fingerprint'in son 8 hanesi Key ID olarak kullanılacak (key id ve password kaybedilmemeli)
+                    6- Oluşturulan fingerprint'i sunucuya kaydetmek için "gpg --keyserver keyserver.ubuntu.com --send-keys [fingerprint]" komutunu çalıştırıyoruz
+                    7- Key dosyası "gpg --export-secret-keys -o ~/.gnupg/key.kbx" komutu ile export ediyoruz
+                    8- Modülün build.gradle dosyasında plugins kısmına 'id("com.vanniktech.maven.publish") version "0.29.0"' kodunu ekliyoruz
+                    9- gradle.properties dosyasına aşağıdaki kodları eklemeliyiz ve ayrıca gradle.properties dosyası .gitignore'a eklenmeli çünkü içindeki bilgiler git repo'da olmamalı
+                        SONATYPE_HOST=CENTRAL_PORTAL
+                        RELEASE_SIGNING_ENABLED=true
+
+                        GROUP=io.github.your_github_account
+                        POM_ARTIFACT_ID=library_name
+                        VERSION_NAME=X.X.X
+
+                        POM_NAME=library_name
+                        POM_DESCRIPTION=This library provides ....
+                        POM_URL=Your github repo url
+
+                        POM_LICENSE_NAME=The Apache Software License, Version 2.0
+                        POM_LICENSE_URL=https://www.apache.org/licenses/LICENSE-2.0.txt
+                        POM_LICENSE_DIST=repo
+
+                        POM_SCM_URL=Your github repo url
+                        POM_SCM_CONNECTION=scm:git:git://github.com/YOUR_GIT_USER/REPO_NAME.git
+                        POM_SCM_DEV_CONNECTION=scm:git:ssh://git@github.com/YOUR_GIT_USER/REPO_NAME.git
+
+                        POM_DEVELOPER_ID=YOUR_GIT_USER
+                        POM_DEVELOPER_NAME=Your Name
+                        POM_DEVELOPER_URL=https://github.com/YOUR_GIT_USER/
+                        POM_DEVELOPER_EMAIL=your email
+
+                        mavenCentralUsername=YOUR_MAVEN_CENTRAL_USERNAME
+                        mavenCentralPassword=YOUR_MAVEN_CENTRAL_PASSWORD
+
+                        signing.keyId=YOUR_SIGNING_KEY_ID
+                        signing.password=YOUR_SIGNING_PASSWORD
+                        signing.secretKeyRingFile=PATH/TO/YOUR/KEY_FILE
+
+                    10- MavenLocal'a publish alıp kontrol edilir(sadece test amaçlı)
+                    11- MavenCentral'a publish için "./gradlew :turkuvapp:assemble" komutunu çalıştırıp eğer sorun yoksa sırasıyla "./gradlew :turkuvapp:signReleasePublication" ve "./gradlew :turkuvapp:publishMavenPublicationToMavenCentralRepository" komutlarını çalıştırıyoruz.
+                    12- Artık maven central panelinde modülümüzü görebilir ve publish butonu ile yayına alabiliriz
+
                 */
 
                 /*

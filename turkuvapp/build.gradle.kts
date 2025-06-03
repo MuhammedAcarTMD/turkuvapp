@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("maven-publish")
+    id("com.vanniktech.maven.publish") version "0.29.0"
 }
 
 android {
@@ -59,7 +60,7 @@ dependencies {
 
 afterEvaluate {
     android.libraryVariants.forEach { variant ->
-        publishing.publications.create(variant.name, MavenPublication::class.java){
+        publishing.publications.create(variant.name, MavenPublication::class.java) {
             from(components.findByName(variant.name))
             groupId = "org.turkuvaz"
             artifactId = "turkuvapp"
